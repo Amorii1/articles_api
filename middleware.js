@@ -1,11 +1,16 @@
-let defaultMiddleware = (req, res, next) => {
-    console.log("I am a middleware =))");
-    return next();
-  };
-  let lastMiddleware=(req, res, next) => {
-    res.statusCode = 404;
-    return res.json("404 not found!!");
-  }
-  
-  module.exports.defaultMiddleware = defaultMiddleware;
-  module.exports.lastMiddleware = lastMiddleware;
+const express = require("express");
+
+let userOne = (req, res, next) => {
+  let headers = req.headers;
+  if (headers.user == 1) return next();
+  res.statusCode = 403;
+  return res.json("NOT AUTHORIZED!!");
+};
+
+let notFound = (req, res, next) => {
+  res.statusCode = 404;
+  return res.json("404 NOT FOUND !!!!");
+};
+
+module.exports.userOne = userOne;
+module.exports.notFound = notFound;
